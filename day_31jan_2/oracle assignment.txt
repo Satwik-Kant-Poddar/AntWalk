@@ -1,0 +1,171 @@
+
+create table Employee(
+    EmpId number,
+    FirstName varchar2(20),
+    LastName varchar2(20),
+    EmailId varchar2(40),
+    Gender char(1),
+    MobileNo char(10),
+    DateOfJoining date default sysdate,
+    DeptId int);
+
+
+desc employee;
+
+alter table employee add(Salary number(10,2));
+
+alter table Employee modify FirstName varchar2(30);
+
+alter table employee modify firstname varchar2(30) constraint Employee_FirstName_NN not null;
+alter table employee modify lastname varchar2(30) constraint Employee_LastName_NN not null;
+
+alter table employee add constraint Employee_Emailid_UN unique(Emailid);
+alter table employee add constraint Employee_Mobile_UN unique(mobileno);
+
+alter table employee add constraint employee_pk primary key(empid);
+
+insert into employee values(501,'satwik','poddar','satwik@gmail.com','M',9185629742,sysdate,101,52000);
+
+insert into employee values (502,'pratik','sinha','pratik@gmail.com','M',915621242,sysdate,103,80000);
+
+insert into employee values (503,'naman','parmar','naman@gmail.com','M',91562123,sysdate,105,60000);
+
+create table department(
+    deptid number constraint dept_pk primary key,
+    deptname varchar2(30) constraint dept_name_nn not null);
+
+alter table employee add constraint employee_dept_ref foreign key(deptid) references department(deptid) on delete set null;
+
+
+
+-------------x------------------x-------------------x------------------
+
+select * from employee;
+
+     EMPID FIRSTNAME                      LASTNAME
+---------- ------------------------------ ------------------------------
+EMAILID                                  G MOBILENO   DATEOFJOI     DEPTID
+---------------------------------------- - ---------- --------- ----------
+    SALARY
+----------
+       501 satwik                         poddar
+satwik@gmail.com                         M 9185629742 06-FEB-23        101
+     52000
+
+       502 pratik                         sinha
+pratik@gmail.com                         M 915621242  06-FEB-23        103
+     80000
+
+     EMPID FIRSTNAME                      LASTNAME
+---------- ------------------------------ ------------------------------
+EMAILID                                  G MOBILENO   DATEOFJOI     DEPTID
+---------------------------------------- - ---------- --------- ----------
+    SALARY
+----------
+
+       503 naman                          parmar
+naman@gmail.com                          M 91562123   06-FEB-23        105
+     60000
+
+
+--------------------------x------------------------x---------------------------------------------x---------------------------
+
+ select * from department ;
+
+    DEPTID DEPTNAME                              LID
+---------- ------------------------------ ----------
+       101 A                                    1000
+       105 B                                    1010
+       103 B                                    1020
+
+
+-------------------------------------------x----------------------------------------x-------------------------x-------------------
+
+
+ select * from location;
+
+       LID CITY
+---------- --------------------
+      1000 tatanagar
+      1010 ramgarh
+      1020 ranchi
+
+
+
+------------------------------------x-----------------------------------x-----------------------x-----------------------
+
+
+
+
+select * from employee e ,department d, location l where e.deptid=d.deptid and d.lid=l.lid;
+
+     EMPID FIRSTNAME                      LASTNAME
+---------- ------------------------------ ------------------------------
+EMAILID                                  G MOBILENO   DATEOFJOI     DEPTID
+---------------------------------------- - ---------- --------- ----------
+    SALARY     DEPTID DEPTNAME                              LID        LID
+---------- ---------- ------------------------------ ---------- ----------
+CITY
+--------------------
+       501 satwik                         poddar
+satwik@gmail.com                         M 9185629742 06-FEB-23        101
+     52000        101 A                                    1000       1000
+tatanagar
+
+
+     EMPID FIRSTNAME                      LASTNAME
+---------- ------------------------------ ------------------------------
+EMAILID                                  G MOBILENO   DATEOFJOI     DEPTID
+---------------------------------------- - ---------- --------- ----------
+    SALARY     DEPTID DEPTNAME                              LID        LID
+---------- ---------- ------------------------------ ---------- ----------
+CITY
+--------------------
+       502 pratik                         sinha
+pratik@gmail.com                         M 915621242  06-FEB-23        103
+     80000        103 B                                    1020       1020
+ranchi
+
+
+     EMPID FIRSTNAME                      LASTNAME
+---------- ------------------------------ ------------------------------
+EMAILID                                  G MOBILENO   DATEOFJOI     DEPTID
+---------------------------------------- - ---------- --------- ----------
+    SALARY     DEPTID DEPTNAME                              LID        LID
+---------- ---------- ------------------------------ ---------- ----------
+CITY
+--------------------
+       503 naman                          parmar
+naman@gmail.com                          M 91562123   06-FEB-23        105
+     60000        105 B                                    1010       1010
+ramgarh
+
+
+----------------------x--------------------------------------x------------------------------x------------------
+
+
+select e.firstname, e.deptid , l.city from employee e , location l , department d where e.deptid = d.deptid and d.lid=l.lid;
+
+FIRSTNAME                          DEPTID CITY
+------------------------------ ---------- --------------------
+satwik                                101 tatanagar
+pratik                                103 ranchi
+naman                                 105 ramgarh
+
+
+
+-------------------------x-------------------------------------x------------------------------x-----------------------------
+
+select empid, firstname, salary from SYSTEM.employee where salary = (select max(salary) from SYSTEM.employee);
+
+     EMPID FIRSTNAME                          SALARY
+---------- ------------------------------ ----------
+       502 pratik                              80000
+
+----------------------------x-----------------------x--------------------------x------------------------------
+
+ select *from (select empid, firstname, salary from SYSTEM.employee order by salary desc FETCH FIRST 2 ROWS ONLY) order by salary fetch first 1 row only;
+
+     EMPID FIRSTNAME                          SALARY
+---------- ------------------------------ ----------
+       503 naman                               60000
