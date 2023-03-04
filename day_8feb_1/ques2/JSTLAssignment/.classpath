@@ -13,12 +13,12 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Dev/Antwalk-Class/eclipse-projects/jstl-1.2.jar">
+	<classpathentry kind="lib" path="C:/Users/PRAGYA/Downloads/jstl-1.2.jar/jstl-1.2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Oracle_db_home/WINDOWS.X64_213000_db_home/jdbc/lib/ojdbc11.jar">
+	<classpathentry kind="lib" path="C:/Users/PRAGYA/Downloads/WINDOWS.X64_213000_db_home/jdbc/lib/ojdbc11.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
